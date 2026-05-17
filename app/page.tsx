@@ -112,6 +112,218 @@ const deals = [
 export default function Home() {
   const [selectedCategory, setSelectedCategory] =
     React.useState('Traditional Pizza');
+const [selectedPizza, setSelectedPizza] =
+  React.useState<any>(null);
+
+const [showToppings, setShowToppings] =
+  React.useState(false);
+
+const [removedIngredients, setRemovedIngredients] =
+  React.useState<string[]>([]);
+
+const [extraToppings, setExtraToppings] =
+  React.useState<string[]>([]);
+
+const [cartItems, setCartItems] = React.useState<any[]>([]);
+
+const pizzaRecipes: Record<string, string[]> = {
+  Margherita: ['Tomato', 'Cheese', 'Oregano'],
+
+  'Garlic & Cheese': [
+    'Garlic',
+    'Cheese',
+    'Oregano',
+  ],
+
+  "Roma's Special": [
+    'Tomato',
+    'Cheese',
+    'Roasted Capsicum',
+    'Mushroom',
+    'Artichoke',
+    'Fresh Garlic',
+  ],
+
+  Pepperoni: [
+    'Tomato',
+    'Cheese',
+    'Hot Salami',
+  ],
+
+  Aussie: [
+    'Tomato',
+    'Cheese',
+    'Ham',
+    'Bacon',
+    'Egg',
+  ],
+
+  Capricciosa: [
+    'Tomato',
+    'Cheese',
+    'Ham',
+    'Mushroom',
+    'Olives',
+  ],
+
+  Vegetarian: [
+    'Tomato',
+    'Cheese',
+    'Mushroom',
+    'Onion',
+    'Capsicum',
+    'Olives',
+  ],
+
+  Americana: [
+    'Tomato',
+    'Cheese',
+    'Ham',
+    'Hot Salami',
+  ],
+
+  'Meat Lover': [
+    'Tomato',
+    'Cheese',
+    'Ham',
+    'Hot Salami',
+    'Bacon',
+    'BBQ Sauce',
+  ],
+
+  Mexicana: [
+    'Tomato',
+    'Cheese',
+    'Ham',
+    'Hot Salami',
+    'Capsicum',
+    'Olives',
+  ],
+
+  Hawaiian: [
+    'Tomato',
+    'Cheese',
+    'Ham',
+    'Pineapple',
+  ],
+
+  Tropical: [
+    'Tomato',
+    'Cheese',
+    'Ham',
+    'Pineapple',
+    'Prawns',
+  ],
+
+  'Plain Jane': [
+    'Tomato',
+    'Cheese',
+    'Ham',
+  ],
+
+  'BBQ Chicken': [
+    'Tomato',
+    'Cheese',
+    'Chicken',
+    'Pineapple',
+    'BBQ Sauce',
+  ],
+
+  'Hot & Spicy': [
+    'Tomato',
+    'Cheese',
+    'Hot Salami',
+    'Mushroom',
+    'Capsicum',
+    'Olives',
+    'Jalapeno',
+    'Chilli',
+  ],
+
+  Mushroom: [
+    'Tomato',
+    'Cheese',
+    'Double Mushroom',
+  ],
+
+  Marinara: [
+    'Tomato',
+    'Mixed Seafood',
+    'Fresh Garlic',
+    'Oregano',
+  ],
+
+  Napolitana: [
+    'Tomato',
+    'Cheese',
+    'Olives',
+    'Anchovies',
+    'Fresh Garlic',
+    'Oregano',
+  ],
+};
+
+const toppings = [
+  'Extra Cheese',
+  'Mushroom',
+  'Onion',
+  'Capsicum',
+  'Olives',
+  'Pineapple',
+  'Ham',
+  'Bacon',
+  'Salami',
+  'Chicken',
+  'Anchovies',
+  'Prawns',
+];
+
+const openPizzaEditor = (
+  pizzaName: string,
+  size: string,
+  price: string
+) => {
+  setSelectedPizza({
+    name: pizzaName,
+    size,
+    price,
+  });
+
+  setRemovedIngredients([]);
+  setExtraToppings([]);
+  setShowToppings(true);
+};
+
+const toggleIngredient = (ingredient: string) => {
+  setRemovedIngredients((prev) =>
+    prev.includes(ingredient)
+      ? prev.filter((i) => i !== ingredient)
+      : [...prev, ingredient]
+  );
+};
+
+const toggleExtra = (topping: string) => {
+  setExtraToppings((prev) =>
+    prev.includes(topping)
+      ? prev.filter((i) => i !== topping)
+      : [...prev, topping]
+  );
+};
+
+const addPizzaToCart = () => {
+  if (!selectedPizza) return;
+
+  setCartItems((prev) => [
+    ...prev,
+    {
+      ...selectedPizza,
+      removedIngredients,
+      extraToppings,
+    },
+  ]);
+
+  setShowToppings(false);
+};
 
   const categories = [
     'Traditional Pizza',
@@ -248,35 +460,156 @@ export default function Home() {
           Current Order
         </h2>
 
-        <div className="flex-1 space-y-3">
-          <div className="bg-neutral-900 rounded-2xl p-4">
-            <div className="flex justify-between">
-              <span>Large Pepperoni</span>
-              <span>$17.90</span>
-            </div>
-          </div>
+<div className="flex-1 space-y-3 overflow-y-auto">
+  {cartItems.map((item, index) => (
+    <div
+      key={index}
+      className="bg-neutral-900 rounded-2xl p-4"
+    >
+      <div className="flex justify-between">
+        <div>
+          <h3 className="font-bold">
+            {item.size} {item.name}
+          </h3>
+
+          {item.removedIngredients.length > 0 && (
+            <p className="text-red-400 text-sm mt-2">
+              NO:{' '}
+              {item.removedIngredients.join(', ')}
+            </p>
+          )}
+
+          {item.extraToppings.length > 0 && (
+            <p className="text-green-400 text-sm mt-1">
+              EXTRA:{' '}
+              {item.extraToppings.join(', ')}
+            </p>
+          )}
         </div>
 
-        <div className="border-t border-neutral-800 pt-5 space-y-3">
-          <div className="flex justify-between text-neutral-400">
-            <span>Subtotal</span>
-            <span>$17.90</span>
-          </div>
-
-          <div className="flex justify-between text-3xl font-bold">
-            <span>Total</span>
-            <span>$17.90</span>
-          </div>
-
-          <button className="w-full bg-green-600 hover:bg-green-500 rounded-2xl py-5 text-xl font-bold">
-            Checkout
-          </button>
-        </div>
+        <span>{item.price}</span>
       </div>
     </div>
-  );
-}
+  ))}
+{showToppings && selectedPizza && (
+  <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-5">
+    <div className="bg-neutral-900 border border-neutral-700 rounded-3xl w-full max-w-4xl p-6 max-h-[90vh] overflow-y-auto">
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          <h2 className="text-3xl font-bold">
+            {selectedPizza.size}{' '}
+            {selectedPizza.name}
+          </h2>
 
+          <p className="text-neutral-400 mt-1">
+            Customize Pizza
+          </p>
+        </div>
+
+        <button
+          onClick={() => setShowToppings(false)}
+          className="bg-red-600 px-5 py-3 rounded-2xl"
+        >
+          Close
+        </button>
+      </div>
+
+      <div className="mb-8">
+        <h3 className="text-2xl font-bold mb-4">
+          Remove Ingredients
+        </h3>
+
+        <div className="grid grid-cols-3 gap-3">
+          {(pizzaRecipes[selectedPizza.name] || []).map(
+            (ingredient) => (
+              <button
+                key={ingredient}
+                onClick={() =>
+                  toggleIngredient(ingredient)
+                }
+                className={`rounded-2xl p-4 ${
+                  removedIngredients.includes(
+                    ingredient
+                  )
+                    ? 'bg-red-600'
+                    : 'bg-neutral-800'
+                }`}
+              >
+                {ingredient}
+              </button>
+            )
+          )}
+        </div>
+      </div>
+
+      <div>
+        <h3 className="text-2xl font-bold mb-4">
+          Extra Toppings
+        </h3>
+
+        <div className="grid grid-cols-3 gap-3">
+          {toppings.map((topping) => (
+            <button
+              key={topping}
+              onClick={() =>
+                toggleExtra(topping)
+              }
+              className={`rounded-2xl p-4 ${
+                extraToppings.includes(topping)
+                  ? 'bg-green-600'
+                  : 'bg-neutral-800'
+              }`}
+            >
+              {topping}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-8 bg-black/30 rounded-2xl p-5">
+        <h3 className="text-2xl font-bold mb-3">
+          Live Preview
+        </h3>
+
+        <p className="text-xl">
+          {selectedPizza.size}{' '}
+          {selectedPizza.name}
+        </p>
+
+        {removedIngredients.length > 0 && (
+          <p className="text-red-400 mt-3">
+            NO:{' '}
+            {removedIngredients.join(', ')}
+          </p>
+        )}
+
+        {extraToppings.length > 0 && (
+          <p className="text-green-400 mt-2">
+            EXTRA:{' '}
+            {extraToppings.join(', ')}
+          </p>
+        )}
+      </div>
+
+      <div className="grid grid-cols-2 gap-4 mt-8">
+        <button
+          onClick={() => setShowToppings(false)}
+          className="bg-neutral-700 rounded-2xl py-4"
+        >
+          Cancel
+        </button>
+
+        <button
+          onClick={addPizzaToCart}
+          className="bg-green-600 rounded-2xl py-4 font-bold"
+        >
+          Add To Order
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+</div>
 function MenuCard({
   title,
   sizes,
@@ -297,9 +630,13 @@ function MenuCard({
       <div className="grid grid-cols-2 gap-3 mt-5">
         {Object.entries(sizes).map(([size, price]) => (
           <button
-            key={size}
-            className="bg-red-600 hover:bg-red-500 rounded-2xl py-4"
-          >
+         <button
+  key={size}
+  onClick={() =>
+    openPizzaEditor(title, size, price)
+  }
+  className="bg-red-600 hover:bg-red-500 rounded-2xl py-4"
+>
             <div className="font-bold text-lg">
               {size}
             </div>
