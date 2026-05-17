@@ -1,3 +1,6 @@
+# Replace Entire app/page.tsx With This
+
+```tsx
 'use client';
 
 import React from 'react';
@@ -49,123 +52,10 @@ const pastaItems = [
   'Pollo e Funghi',
 ];
 
-const chickenMeals = [
-  'Chicken Schnitzel',
-  'Chicken Parma',
-  'Aussie Parma',
-  'Hawaiian Parma',
-  'American Parma',
-  'Chicken Bolognese',
-];
-
-const deals = [
-  {
-    name: 'Deal 1',
-    description:
-      '1 Large Traditional Pizza + Garlic Bread + 1.25L Drink',
-    price: '$24.90',
-  },
-  {
-    name: 'Deal 2',
-    description:
-      '2 Large Traditional Pizzas + Garlic Bread + 1.25L Drink',
-    price: '$46.90',
-  },
-  {
-    name: 'Deal 3',
-    description:
-      '2 Family Traditional Pizzas + Garlic Bread + 1.25L Drink',
-    price: '$48.90',
-  },
-  {
-    name: 'Deal 4',
-    description:
-      '1 Large Traditional Pizza + 1 Pasta + Garlic Bread + 2 Soft Drinks',
-    price: '$39.90',
-  },
-  {
-    name: 'Deal 5',
-    description:
-      '2 Pastas + Garlic Bread + 1.25L Drink',
-    price: '$38.90',
-  },
-  {
-    name: 'Deal 6',
-    description:
-      '2 Chicken Parmas + Garlic Bread + 1.25L Drink',
-    price: '$57.90',
-  },
-  {
-    name: 'Deal 7',
-    description:
-      '3 Large Traditional Pizzas',
-    price: '$46.90',
-  },
-  {
-    name: 'Deal 8',
-    description:
-      '3 Family Traditional Pizzas',
-    price: '$56.90',
-  },
-];
-
-export default function Home() {
-  const [selectedCategory, setSelectedCategory] =
-    React.useState('Traditional Pizza');
-const [selectedPizza, setSelectedPizza] =
-  React.useState<any>(null);
-
-const [showToppings, setShowToppings] =
-  React.useState(false);
-
-const [removedIngredients, setRemovedIngredients] =
-  React.useState<string[]>([]);
-
-const [extraToppings, setExtraToppings] =
-  React.useState<string[]>([]);
-
-const [cartItems, setCartItems] = React.useState<any[]>([]);
-
 const pizzaRecipes: Record<string, string[]> = {
   Margherita: ['Tomato', 'Cheese', 'Oregano'],
-
-  'Garlic & Cheese': [
-    'Garlic',
-    'Cheese',
-    'Oregano',
-  ],
-
-  "Roma's Special": [
-    'Tomato',
-    'Cheese',
-    'Roasted Capsicum',
-    'Mushroom',
-    'Artichoke',
-    'Fresh Garlic',
-  ],
-
-  Pepperoni: [
-    'Tomato',
-    'Cheese',
-    'Hot Salami',
-  ],
-
-  Aussie: [
-    'Tomato',
-    'Cheese',
-    'Ham',
-    'Bacon',
-    'Egg',
-  ],
-
-  Capricciosa: [
-    'Tomato',
-    'Cheese',
-    'Ham',
-    'Mushroom',
-    'Olives',
-  ],
-
+  Pepperoni: ['Tomato', 'Cheese', 'Hot Salami'],
+  Hawaiian: ['Tomato', 'Cheese', 'Ham', 'Pineapple'],
   Vegetarian: [
     'Tomato',
     'Cheese',
@@ -174,14 +64,6 @@ const pizzaRecipes: Record<string, string[]> = {
     'Capsicum',
     'Olives',
   ],
-
-  Americana: [
-    'Tomato',
-    'Cheese',
-    'Ham',
-    'Hot Salami',
-  ],
-
   'Meat Lover': [
     'Tomato',
     'Cheese',
@@ -189,77 +71,6 @@ const pizzaRecipes: Record<string, string[]> = {
     'Hot Salami',
     'Bacon',
     'BBQ Sauce',
-  ],
-
-  Mexicana: [
-    'Tomato',
-    'Cheese',
-    'Ham',
-    'Hot Salami',
-    'Capsicum',
-    'Olives',
-  ],
-
-  Hawaiian: [
-    'Tomato',
-    'Cheese',
-    'Ham',
-    'Pineapple',
-  ],
-
-  Tropical: [
-    'Tomato',
-    'Cheese',
-    'Ham',
-    'Pineapple',
-    'Prawns',
-  ],
-
-  'Plain Jane': [
-    'Tomato',
-    'Cheese',
-    'Ham',
-  ],
-
-  'BBQ Chicken': [
-    'Tomato',
-    'Cheese',
-    'Chicken',
-    'Pineapple',
-    'BBQ Sauce',
-  ],
-
-  'Hot & Spicy': [
-    'Tomato',
-    'Cheese',
-    'Hot Salami',
-    'Mushroom',
-    'Capsicum',
-    'Olives',
-    'Jalapeno',
-    'Chilli',
-  ],
-
-  Mushroom: [
-    'Tomato',
-    'Cheese',
-    'Double Mushroom',
-  ],
-
-  Marinara: [
-    'Tomato',
-    'Mixed Seafood',
-    'Fresh Garlic',
-    'Oregano',
-  ],
-
-  Napolitana: [
-    'Tomato',
-    'Cheese',
-    'Olives',
-    'Anchovies',
-    'Fresh Garlic',
-    'Oregano',
   ],
 };
 
@@ -272,66 +83,81 @@ const toppings = [
   'Pineapple',
   'Ham',
   'Bacon',
-  'Salami',
   'Chicken',
-  'Anchovies',
-  'Prawns',
+  'Salami',
 ];
 
-const openPizzaEditor = (
-  pizzaName: string,
-  size: string,
-  price: string
-) => {
-  setSelectedPizza({
-    name: pizzaName,
-    size,
-    price,
-  });
+export default function Home() {
+  const [selectedCategory, setSelectedCategory] =
+    React.useState('Traditional Pizza');
 
-  setRemovedIngredients([]);
-  setExtraToppings([]);
-  setShowToppings(true);
-};
+  const [selectedPizza, setSelectedPizza] =
+    React.useState<any>(null);
 
-const toggleIngredient = (ingredient: string) => {
-  setRemovedIngredients((prev) =>
-    prev.includes(ingredient)
-      ? prev.filter((i) => i !== ingredient)
-      : [...prev, ingredient]
-  );
-};
+  const [showPopup, setShowPopup] =
+    React.useState(false);
 
-const toggleExtra = (topping: string) => {
-  setExtraToppings((prev) =>
-    prev.includes(topping)
-      ? prev.filter((i) => i !== topping)
-      : [...prev, topping]
-  );
-};
+  const [removedIngredients, setRemovedIngredients] =
+    React.useState<string[]>([]);
 
-const addPizzaToCart = () => {
-  if (!selectedPizza) return;
+  const [extraToppings, setExtraToppings] =
+    React.useState<string[]>([]);
 
-  setCartItems((prev) => [
-    ...prev,
-    {
-      ...selectedPizza,
-      removedIngredients,
-      extraToppings,
-    },
-  ]);
-
-  setShowToppings(false);
-};
+  const [cartItems, setCartItems] =
+    React.useState<any[]>([]);
 
   const categories = [
     'Traditional Pizza',
     'Gourmet Pizza',
     'Pasta',
-    'Chicken Meals',
-    'Deals',
   ];
+
+  const openPizza = (
+    title: string,
+    size: string,
+    price: string
+  ) => {
+    setSelectedPizza({
+      title,
+      size,
+      price,
+    });
+
+    setRemovedIngredients([]);
+    setExtraToppings([]);
+    setShowPopup(true);
+  };
+
+  const toggleIngredient = (ingredient: string) => {
+    setRemovedIngredients((prev) =>
+      prev.includes(ingredient)
+        ? prev.filter((i) => i !== ingredient)
+        : [...prev, ingredient]
+    );
+  };
+
+  const toggleExtra = (ingredient: string) => {
+    setExtraToppings((prev) =>
+      prev.includes(ingredient)
+        ? prev.filter((i) => i !== ingredient)
+        : [...prev, ingredient]
+    );
+  };
+
+  const addToCart = () => {
+    if (!selectedPizza) return;
+
+    setCartItems((prev) => [
+      ...prev,
+      {
+        ...selectedPizza,
+        removedIngredients,
+        extraToppings,
+      },
+    ]);
+
+    setShowPopup(false);
+  };
 
   const renderItems = () => {
     switch (selectedCategory) {
@@ -346,6 +172,7 @@ const addPizzaToCart = () => {
               L: '$17.90',
               F: '$20.90',
             }}
+            onSelect={openPizza}
           />
         ));
 
@@ -360,6 +187,7 @@ const addPizzaToCart = () => {
               L: '$20.90',
               GF: '$23.30',
             }}
+            onSelect={openPizza}
           />
         ));
 
@@ -370,41 +198,6 @@ const addPizzaToCart = () => {
             title={item}
             price="$17.90"
           />
-        ));
-
-      case 'Chicken Meals':
-        return chickenMeals.map((item) => (
-          <SimpleCard
-            key={item}
-            title={item}
-            price="$27.50"
-          />
-        ));
-
-      case 'Deals':
-        return deals.map((deal) => (
-          <div
-            key={deal.name}
-            className="bg-neutral-800 rounded-3xl p-5 border border-neutral-700"
-          >
-            <h3 className="text-2xl font-bold text-red-500">
-              {deal.name}
-            </h3>
-
-            <p className="text-neutral-300 mt-3">
-              {deal.description}
-            </p>
-
-            <div className="mt-5 flex items-center justify-between">
-              <span className="text-3xl font-bold">
-                {deal.price}
-              </span>
-
-              <button className="bg-red-600 hover:bg-red-500 px-5 py-3 rounded-2xl font-semibold">
-                Add Deal
-              </button>
-            </div>
-          </div>
         ));
 
       default:
@@ -439,183 +232,149 @@ const addPizzaToCart = () => {
       </div>
 
       <div className="flex-1 p-5 overflow-y-auto">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-4xl font-bold">
-            {selectedCategory}
-          </h2>
-
-          <input
-            placeholder="Search..."
-            className="bg-neutral-900 border border-neutral-700 rounded-2xl px-5 py-3 w-80"
-          />
-        </div>
+        <h2 className="text-4xl font-bold mb-6">
+          {selectedCategory}
+        </h2>
 
         <div className="grid grid-cols-3 gap-5">
           {renderItems()}
         </div>
       </div>
 
-      <div className="w-96 bg-black border-l border-neutral-800 p-5 flex flex-col">
+      <div className="w-96 bg-black border-l border-neutral-800 p-5 overflow-y-auto">
         <h2 className="text-3xl font-bold mb-5">
           Current Order
         </h2>
 
-<div className="flex-1 space-y-3 overflow-y-auto">
-  {cartItems.map((item, index) => (
-    <div
-      key={index}
-      className="bg-neutral-900 rounded-2xl p-4"
-    >
-      <div className="flex justify-between">
-        <div>
-          <h3 className="font-bold">
-            {item.size} {item.name}
-          </h3>
-
-          {item.removedIngredients.length > 0 && (
-            <p className="text-red-400 text-sm mt-2">
-              NO:{' '}
-              {item.removedIngredients.join(', ')}
-            </p>
-          )}
-
-          {item.extraToppings.length > 0 && (
-            <p className="text-green-400 text-sm mt-1">
-              EXTRA:{' '}
-              {item.extraToppings.join(', ')}
-            </p>
-          )}
-        </div>
-
-        <span>{item.price}</span>
-      </div>
-    </div>
-  ))}
-{showToppings && selectedPizza && (
-  <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-5">
-    <div className="bg-neutral-900 border border-neutral-700 rounded-3xl w-full max-w-4xl p-6 max-h-[90vh] overflow-y-auto">
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h2 className="text-3xl font-bold">
-            {selectedPizza.size}{' '}
-            {selectedPizza.name}
-          </h2>
-
-          <p className="text-neutral-400 mt-1">
-            Customize Pizza
-          </p>
-        </div>
-
-        <button
-          onClick={() => setShowToppings(false)}
-          className="bg-red-600 px-5 py-3 rounded-2xl"
-        >
-          Close
-        </button>
-      </div>
-
-      <div className="mb-8">
-        <h3 className="text-2xl font-bold mb-4">
-          Remove Ingredients
-        </h3>
-
-        <div className="grid grid-cols-3 gap-3">
-          {(pizzaRecipes[selectedPizza.name] || []).map(
-            (ingredient) => (
-              <button
-                key={ingredient}
-                onClick={() =>
-                  toggleIngredient(ingredient)
-                }
-                className={`rounded-2xl p-4 ${
-                  removedIngredients.includes(
-                    ingredient
-                  )
-                    ? 'bg-red-600'
-                    : 'bg-neutral-800'
-                }`}
-              >
-                {ingredient}
-              </button>
-            )
-          )}
-        </div>
-      </div>
-
-      <div>
-        <h3 className="text-2xl font-bold mb-4">
-          Extra Toppings
-        </h3>
-
-        <div className="grid grid-cols-3 gap-3">
-          {toppings.map((topping) => (
-            <button
-              key={topping}
-              onClick={() =>
-                toggleExtra(topping)
-              }
-              className={`rounded-2xl p-4 ${
-                extraToppings.includes(topping)
-                  ? 'bg-green-600'
-                  : 'bg-neutral-800'
-              }`}
+        <div className="space-y-4">
+          {cartItems.map((item, index) => (
+            <div
+              key={index}
+              className="bg-neutral-900 rounded-2xl p-4"
             >
-              {topping}
-            </button>
+              <div className="flex justify-between">
+                <div>
+                  <h3 className="font-bold text-lg">
+                    {item.size} {item.title}
+                  </h3>
+
+                  {item.removedIngredients.length > 0 && (
+                    <p className="text-red-400 text-sm mt-2">
+                      NO: {item.removedIngredients.join(', ')}
+                    </p>
+                  )}
+
+                  {item.extraToppings.length > 0 && (
+                    <p className="text-green-400 text-sm mt-2">
+                      EXTRA: {item.extraToppings.join(', ')}
+                    </p>
+                  )}
+                </div>
+
+                <span>{item.price}</span>
+              </div>
+            </div>
           ))}
         </div>
       </div>
 
-      <div className="mt-8 bg-black/30 rounded-2xl p-5">
-        <h3 className="text-2xl font-bold mb-3">
-          Live Preview
-        </h3>
+      {showPopup && selectedPizza && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-5">
+          <div className="bg-neutral-900 border border-neutral-700 rounded-3xl w-full max-w-4xl p-6 overflow-y-auto max-h-[90vh]">
+            <div className="flex justify-between items-center mb-6">
+              <div>
+                <h2 className="text-3xl font-bold">
+                  {selectedPizza.size} {selectedPizza.title}
+                </h2>
 
-        <p className="text-xl">
-          {selectedPizza.size}{' '}
-          {selectedPizza.name}
-        </p>
+                <p className="text-neutral-400 mt-2">
+                  Customize Pizza
+                </p>
+              </div>
 
-        {removedIngredients.length > 0 && (
-          <p className="text-red-400 mt-3">
-            NO:{' '}
-            {removedIngredients.join(', ')}
-          </p>
-        )}
+              <button
+                onClick={() => setShowPopup(false)}
+                className="bg-red-600 px-5 py-3 rounded-2xl"
+              >
+                Close
+              </button>
+            </div>
 
-        {extraToppings.length > 0 && (
-          <p className="text-green-400 mt-2">
-            EXTRA:{' '}
-            {extraToppings.join(', ')}
-          </p>
-        )}
-      </div>
+            <div>
+              <h3 className="text-2xl font-bold mb-4">
+                Remove Ingredients
+              </h3>
 
-      <div className="grid grid-cols-2 gap-4 mt-8">
-        <button
-          onClick={() => setShowToppings(false)}
-          className="bg-neutral-700 rounded-2xl py-4"
-        >
-          Cancel
-        </button>
+              <div className="grid grid-cols-3 gap-3">
+                {(pizzaRecipes[selectedPizza.title] || []).map(
+                  (ingredient) => (
+                    <button
+                      key={ingredient}
+                      onClick={() =>
+                        toggleIngredient(ingredient)
+                      }
+                      className={`rounded-2xl p-4 ${
+                        removedIngredients.includes(
+                          ingredient
+                        )
+                          ? 'bg-red-600'
+                          : 'bg-neutral-800'
+                      }`}
+                    >
+                      {ingredient}
+                    </button>
+                  )
+                )}
+              </div>
+            </div>
 
-        <button
-          onClick={addPizzaToCart}
-          className="bg-green-600 rounded-2xl py-4 font-bold"
-        >
-          Add To Order
-        </button>
-      </div>
+            <div className="mt-8">
+              <h3 className="text-2xl font-bold mb-4">
+                Extra Toppings
+              </h3>
+
+              <div className="grid grid-cols-3 gap-3">
+                {toppings.map((ingredient) => (
+                  <button
+                    key={ingredient}
+                    onClick={() => toggleExtra(ingredient)}
+                    className={`rounded-2xl p-4 ${
+                      extraToppings.includes(ingredient)
+                        ? 'bg-green-600'
+                        : 'bg-neutral-800'
+                    }`}
+                  >
+                    {ingredient}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <button
+              onClick={addToCart}
+              className="w-full bg-green-600 rounded-2xl py-5 text-xl font-bold mt-8"
+            >
+              Add To Order
+            </button>
+          </div>
+        </div>
+      )}
     </div>
-  </div>
-)}
-</div>
+  );
+}
+
 function MenuCard({
   title,
   sizes,
+  onSelect,
 }: {
   title: string;
   sizes: Record<string, string>;
+  onSelect: (
+    title: string,
+    size: string,
+    price: string
+  ) => void;
 }) {
   return (
     <div className="bg-neutral-900 border border-neutral-800 rounded-3xl p-5">
@@ -630,13 +389,12 @@ function MenuCard({
       <div className="grid grid-cols-2 gap-3 mt-5">
         {Object.entries(sizes).map(([size, price]) => (
           <button
-         <button
-  key={size}
-  onClick={() =>
-    openPizzaEditor(title, size, price)
-  }
-  className="bg-red-600 hover:bg-red-500 rounded-2xl py-4"
->
+            key={size}
+            onClick={() =>
+              onSelect(title, size, price)
+            }
+            className="bg-red-600 hover:bg-red-500 rounded-2xl py-4"
+          >
             <div className="font-bold text-lg">
               {size}
             </div>
@@ -661,7 +419,7 @@ function SimpleCard({
   return (
     <div className="bg-neutral-900 border border-neutral-800 rounded-3xl p-5">
       <div className="h-36 rounded-2xl bg-neutral-800 mb-4 flex items-center justify-center text-neutral-500">
-        Menu Item
+        Pasta
       </div>
 
       <h3 className="text-2xl font-bold">
@@ -673,10 +431,21 @@ function SimpleCard({
           {price}
         </span>
 
-        <button className="bg-red-600 hover:bg-red-500 px-5 py-3 rounded-2xl">
+        <button className="bg-red-600 px-5 py-3 rounded-2xl">
           Add
         </button>
       </div>
     </div>
   );
 }
+```
+
+Then save and run:
+
+```bash
+git add .
+git commit -m "Working popup system"
+git push
+```
+
+Refresh your Vercel site after 1 minute.
